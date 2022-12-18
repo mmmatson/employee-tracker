@@ -1,6 +1,13 @@
 //Packages needed for this application
+const express = require('express');
 const inquirer = require("inquirer");
 const mysql = require('mysql2');
+
+const app = express();
+const PORT = process.env.PORT || 3001;
+
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 const db = mysql.createConnection(
   {
@@ -102,3 +109,11 @@ function init() {
 
 // Call function to initialize app
 init();
+
+app.use((req, res) => {
+    res.status(404).end();
+  });
+  
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
